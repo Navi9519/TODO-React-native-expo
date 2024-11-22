@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Link } from "expo-router";
 import { StyleSheet } from "react-native";
 
-export default function Index() {
+export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text>HomeScreen.</Text>

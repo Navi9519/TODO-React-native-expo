@@ -1,11 +1,25 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  Pressable,
+} from "react-native";
+import TitleInput from "@/components/inputs/TitleInput";
+import DescriptionInput from "@/components/inputs/DescriptionInput";
+import AddButton from "@/components/buttons/AddButton";
 
-export default function AddTodos() {
+export default function AddTodosScreen() {
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input}>Hello</TextInput>
-
-      <Text>Add todos page</Text>
+      <View style={styles.inputContainer}>
+        <Text>Title</Text>
+        <TitleInput></TitleInput>
+        <Text>Description</Text>
+        <DescriptionInput></DescriptionInput>
+        <AddButton />
+      </View>
     </View>
   );
 }
@@ -14,15 +28,17 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    margin: 40,
+    //backgroundColor: "blue",
   },
 
-  input: {
-    height: 40,
-    width: 150,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  inputContainer: {
+    display: "flex",
+    justifyContent: "flex-start",
+    height: "40%",
+    width: "100%",
+    // backgroundColor: "gray",
   },
 });
