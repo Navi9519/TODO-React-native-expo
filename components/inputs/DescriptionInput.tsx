@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { TextInput, StyleSheet } from "react-native";
 
-export default function DescriptionInput() {
-  const [text, setText] = useState("");
+interface DescriptionInputProps {
+  value: string;
+  onChangeText: (text: string) => void;
+}
 
+export default function DescriptionInput({
+  value,
+  onChangeText,
+}: DescriptionInputProps) {
   return (
     <TextInput
       multiline
       numberOfLines={4}
       maxLength={100}
       style={styles.input}
-      value={text}
-      onChangeText={setText}
+      value={value}
+      onChangeText={onChangeText}
     />
   );
 }

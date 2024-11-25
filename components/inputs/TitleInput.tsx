@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { TextInput, StyleSheet } from "react-native";
 
-export default function TitleInput() {
-  const [text, setText] = useState("");
+interface TitleInputProps {
+  value: string;
+  onChangeText: (text: string) => void;
+}
 
-  return <TextInput style={styles.input} value={text} onChangeText={setText} />;
+export default function TitleInput({ value, onChangeText }: TitleInputProps) {
+  return (
+    <TextInput style={styles.input} value={value} onChangeText={onChangeText} />
+  );
 }
 
 const styles = StyleSheet.create({

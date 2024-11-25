@@ -20,7 +20,6 @@ export default function AddTodosScreen() {
   const [todo, setTodo] = useState<ITodo>({
     title: "",
     description: "",
-    date: new Date(),
   });
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [date, setDate] = useState<Date>(new Date());
@@ -30,17 +29,26 @@ export default function AddTodosScreen() {
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
     if (event.type === "set" && selectedDate) {
-      setDate(selectedDate);
+      setDate(currentDate);
     }
   };
+
+  const addTodo = () => {};
 
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <Text>Title</Text>
-        <TitleInput></TitleInput>
+        <TitleInput
+          value={todo.title}
+          onChangeText={(text) => setTodo({ ...todo })}
+        />
+
         <Text>Description</Text>
-        <DescriptionInput></DescriptionInput>
+        <DescriptionInput
+          value={todo.description}
+          onChangeText={(text) => setTodo({ ...todo })}
+        />
         <DateTimePicker
           style={styles.datepicker}
           value={date}

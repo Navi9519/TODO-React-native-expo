@@ -1,5 +1,5 @@
 export default interface Todo {
-  title: String;
-  description: String;
+  title: string;
+  description: string;
   date?: Date;
 }
