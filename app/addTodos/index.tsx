@@ -78,6 +78,11 @@ export default function AddTodosScreen() {
         <View style={styles.cardsContainer}>
           {todos.map((todo, index) => (
             <View style={styles.card} key={index}>
+              <Text style={styles.dateTxt}>
+                {todo.date
+                  ? new Date(todo.date).toLocaleDateString()
+                  : "No Date Selected"}
+              </Text>
               <View style={styles.content}>
                 <Text style={styles.labelTxt}>Title:</Text>
                 <Text style={styles.contentTxt}>{todo.title}</Text>
@@ -151,8 +156,8 @@ const styles = StyleSheet.create({
     elevation: 14,
     display: "flex",
     justifyContent: "flex-start",
-    width: "50%", // Make cards almost full width
-    height: 120,
+    width: "80%", // Make cards almost full width
+    height: 150,
     alignSelf: "center", // Center the card
     marginVertical: 10, // Space between cards
   },
@@ -161,8 +166,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    alignContent: "space-between",
-    height: "50%",
+    alignContent: "space-evenly",
+    height: "45%",
   },
 
   labelTxt: {
@@ -175,5 +180,12 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontSize: 12,
     color: "white",
+  },
+
+  dateTxt: {
+    fontSize: 14,
+    color: "white",
+    marginBottom: 10,
+    marginTop: 2,
   },
 });
