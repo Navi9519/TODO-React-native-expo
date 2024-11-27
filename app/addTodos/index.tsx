@@ -29,19 +29,18 @@ export default function AddTodosScreen() {
   // Methods
 
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-    const currentDate = selectedDate || date;
     if (event.type === "set" && selectedDate) {
       setDate(selectedDate);
+      setTodo((prevTodo) => ({ ...prevTodo, date: selectedDate }));
     }
   };
 
   const addTodo = () => {
-    const newTodo: ITodo = {
-      ...todo,
-    };
+    setTodos((prevTodos) => [...prevTodos, todo]);
 
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
-    setTodo({ title: "", description: "", date });
+    // reseting input field
+    setTodo({ title: "", description: "", date: new Date() });
+    setDate(new Date());
     console.log(todos);
   };
 
