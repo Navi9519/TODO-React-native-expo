@@ -5,6 +5,7 @@ import {
   TextInput,
   Button,
   Pressable,
+  ScrollView,
 } from "react-native";
 import TitleInput from "@/components/inputs/TitleInput";
 import DescriptionInput from "@/components/inputs/DescriptionInput";
@@ -33,7 +34,15 @@ export default function AddTodosScreen() {
     }
   };
 
-  const addTodo = () => {};
+  const addTodo = () => {
+    const newTodo: ITodo = {
+      ...todo,
+    };
+
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
+    setTodo({ title: "", description: "" });
+    console.log(todos);
+  };
 
   return (
     <View style={styles.container}>
@@ -41,13 +50,15 @@ export default function AddTodosScreen() {
         <Text>Title</Text>
         <TitleInput
           value={todo.title}
-          onChangeText={(text) => setTodo({ ...todo })}
+          onChangeTitle={(text) => setTodo({ ...todo, title: text })}
         />
 
         <Text>Description</Text>
         <DescriptionInput
           value={todo.description}
-          onChangeText={(text) => setTodo({ ...todo })}
+          onChangeDescription={(text) =>
+            setTodo({ ...todo, description: text })
+          }
         />
         <DateTimePicker
           style={styles.datepicker}
@@ -56,8 +67,27 @@ export default function AddTodosScreen() {
           display="default"
           onChange={onChange}
         />
-        <AddButton />
+        <AddButton handleClick={addTodo} />
       </View>
+
+      <ScrollView
+        style={styles.todosContainer}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {todos.map((todo, index) => (
+          <View style={styles.card} key={index}>
+            <View style={styles.content}>
+              <Text style={styles.labelTxt}>Title:</Text>
+              <Text style={styles.contentTxt}>{todo.title}</Text>
+            </View>
+
+            <View style={styles.content}>
+              <Text style={styles.labelTxt}>Description:</Text>
+              <Text style={styles.contentTxt}>-{todo.description}</Text>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -68,19 +98,72 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    margin: 40,
-    //backgroundColor: "blue",
+    height: "100%",
+    width: "100%",
+    // backgroundColor: "blue",
   },
 
   inputContainer: {
     display: "flex",
     justifyContent: "flex-start",
-    height: "40%",
+    height: "50%",
     width: "100%",
+    paddingTop: 20,
+    paddingLeft: 20,
     // backgroundColor: "gray",
   },
 
   datepicker: {
     marginVertical: 10,
+  },
+
+  todosContainer: {
+    width: "100%",
+    marginTop: 20,
+  },
+
+  scrollContent: {
+    alignItems: "center",
+    alignContent: "space-evenly",
+    justifyContent: "flex-start",
+  },
+
+  card: {
+    backgroundColor: "blue",
+    borderRadius: 15,
+    padding: 10,
+    shadowColor: "white",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 14,
+    width: "50%",
+    height: "30%",
+    display: "flex",
+    justifyContent: "flex-start",
+    marginVertical: 10,
+  },
+
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignContent: "space-between",
+    height: "50%",
+  },
+
+  labelTxt: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white",
+  },
+
+  contentTxt: {
+    marginTop: 2,
+    fontSize: 12,
+    color: "white",
   },
 });

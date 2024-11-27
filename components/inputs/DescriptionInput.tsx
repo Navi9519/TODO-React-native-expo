@@ -3,12 +3,12 @@ import { TextInput, StyleSheet } from "react-native";
 
 interface DescriptionInputProps {
   value: string;
-  onChangeText: (text: string) => void;
+  onChangeDescription: (text: string) => void;
 }
 
 export default function DescriptionInput({
   value,
-  onChangeText,
+  onChangeDescription,
 }: DescriptionInputProps) {
   return (
     <TextInput
@@ -17,7 +17,7 @@ export default function DescriptionInput({
       maxLength={100}
       style={styles.input}
       value={value}
-      onChangeText={onChangeText}
+      onChangeText={onChangeDescription}
     />
   );
 }

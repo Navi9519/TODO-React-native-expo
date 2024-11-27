@@ -1,9 +1,12 @@
 import { Pressable, Text, StyleSheet } from "react-native";
 
-export default function AddButton() {
-  const onClick = () => {};
+interface buttonProps {
+  handleClick: () => void;
+}
+
+export default function AddButton({ handleClick }: buttonProps) {
   return (
-    <Pressable onPress={onClick} style={styles.button}>
+    <Pressable onPress={handleClick} style={styles.button}>
       <Text style={styles.btnText}>Add todo</Text>
     </Pressable>
   );
