@@ -21,6 +21,7 @@ export default function AddTodosScreen() {
   const [todo, setTodo] = useState<ITodo>({
     title: "",
     description: "",
+    date: new Date(),
   });
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [date, setDate] = useState<Date>(new Date());
@@ -30,7 +31,7 @@ export default function AddTodosScreen() {
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     const currentDate = selectedDate || date;
     if (event.type === "set" && selectedDate) {
-      setDate(currentDate);
+      setDate(selectedDate);
     }
   };
 
@@ -40,7 +41,7 @@ export default function AddTodosScreen() {
     };
 
     setTodos((prevTodos) => [...prevTodos, newTodo]);
-    setTodo({ title: "", description: "" });
+    setTodo({ title: "", description: "", date });
     console.log(todos);
   };
 
@@ -74,19 +75,21 @@ export default function AddTodosScreen() {
         style={styles.todosContainer}
         contentContainerStyle={styles.scrollContent}
       >
-        {todos.map((todo, index) => (
-          <View style={styles.card} key={index}>
-            <View style={styles.content}>
-              <Text style={styles.labelTxt}>Title:</Text>
-              <Text style={styles.contentTxt}>{todo.title}</Text>
-            </View>
+        <View style={styles.cardsContainer}>
+          {todos.map((todo, index) => (
+            <View style={styles.card} key={index}>
+              <View style={styles.content}>
+                <Text style={styles.labelTxt}>Title:</Text>
+                <Text style={styles.contentTxt}>{todo.title}</Text>
+              </View>
 
-            <View style={styles.content}>
-              <Text style={styles.labelTxt}>Description:</Text>
-              <Text style={styles.contentTxt}>-{todo.description}</Text>
+              <View style={styles.content}>
+                <Text style={styles.labelTxt}>Description:</Text>
+                <Text style={styles.contentTxt}>-{todo.description}</Text>
+              </View>
             </View>
-          </View>
-        ))}
+          ))}
+        </View>
       </ScrollView>
     </View>
   );
@@ -128,6 +131,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 
+  cardsContainer: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+  },
+
   card: {
     backgroundColor: "blue",
     borderRadius: 15,
@@ -140,11 +149,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 14,
-    width: "50%",
-    height: "30%",
     display: "flex",
     justifyContent: "flex-start",
-    marginVertical: 10,
+    width: "50%", // Make cards almost full width
+    height: 120,
+    alignSelf: "center", // Center the card
+    marginVertical: 10, // Space between cards
   },
 
   content: {
