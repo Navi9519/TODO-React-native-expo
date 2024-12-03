@@ -13,8 +13,9 @@ import AddButton from "@/components/buttons/AddButton";
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ITodo from "../_types/ITodo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AddTodosScreen() {
   // States
@@ -43,6 +44,38 @@ export default function AddTodosScreen() {
     setDate(new Date());
     console.log(todos);
   };
+
+  // UseEffects
+
+  // Loading all the added todos every time the component mounts
+  useEffect(() => {
+    const loadTodos = async () => {
+      try {
+        const storedTodos = await AsyncStorage.getItem("todos");
+        if (storedTodos) {
+          setTodos(JSON.parse(storedTodos));
+        }
+      } catch (error) {
+        console.error("Failed to load todos:", error);
+      }
+    };
+
+    loadTodos();
+  }, []);
+
+  // Updating the todos every time the todoarray changes
+
+  useEffect(() => {
+    const saveTodos = async () => {
+      try {
+        await AsyncStorage.setItem("todos", JSON.stringify(todos));
+      } catch (error) {
+        console.log("failed to save todos", error);
+      }
+    };
+
+    saveTodos();
+  }, [todos]);
 
   return (
     <View style={styles.container}>
