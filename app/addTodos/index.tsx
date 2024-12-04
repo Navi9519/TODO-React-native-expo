@@ -85,6 +85,19 @@ export default function AddTodosScreen() {
     };
   }, []);
 
+  const deleteTodo = async (todoTodelete: ITodo) => {
+    try {
+      const updatedTodos = todos.filter(
+        (todo) => todo.title !== todoTodelete.title
+      );
+      setTodos(updatedTodos);
+
+      await AsyncStorage.setItem("todos", JSON.stringify(updatedTodos));
+    } catch (error) {
+      console.log("failed to delete todo", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -110,7 +123,7 @@ export default function AddTodosScreen() {
         />
         <AddButton handleClick={addTodo} />
       </View>
-      <ScrollTodoView todos={todos} />
+      <ScrollTodoView todos={todos} handleClick={(todo) => deleteTodo(todo)} />
     </View>
   );
 }

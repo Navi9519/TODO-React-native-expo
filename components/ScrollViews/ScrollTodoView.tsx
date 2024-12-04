@@ -1,10 +1,22 @@
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Pressable,
+} from "react-native";
 import ITodo from "../../app/_types/ITodo";
+import AddButton from "../buttons/AddButton";
 
 interface ScrollTodoViewProps {
   todos: ITodo[];
+  handleClick: (todo: ITodo) => void;
 }
-export default function ScrollTodoView({ todos }: ScrollTodoViewProps) {
+export default function ScrollTodoView({
+  todos,
+  handleClick,
+}: ScrollTodoViewProps) {
   return (
     <ScrollView
       style={styles.todosContainer}
@@ -13,11 +25,19 @@ export default function ScrollTodoView({ todos }: ScrollTodoViewProps) {
       <View style={styles.cardsContainer}>
         {todos.map((todo, index) => (
           <View style={styles.card} key={index}>
-            <Text style={styles.dateTxt}>
-              {todo.date
-                ? new Date(todo.date).toLocaleDateString()
-                : "No Date Selected"}
-            </Text>
+            <View style={styles.cardHeader}>
+              <Text style={styles.dateTxt}>
+                {todo.date
+                  ? new Date(todo.date).toLocaleDateString()
+                  : "No Date Selected"}
+              </Text>
+              <Pressable
+                onPress={() => handleClick(todo)}
+                style={styles.deleteBtn}
+              >
+                <Text style={styles.labelTxt}>Delete</Text>
+              </Pressable>
+            </View>
             <View style={styles.content}>
               <Text style={styles.labelTxt}>Title:</Text>
               <Text style={styles.contentTxt}>{todo.title}</Text>
@@ -70,6 +90,23 @@ const styles = StyleSheet.create({
     height: 150,
     alignSelf: "center", // Center the card
     marginVertical: 10, // Space between cards
+  },
+
+  cardHeader: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    //backgroundColor: "yellow",
+  },
+
+  deleteBtn: {
+    backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+    elevation: 4,
+    width: "20%",
   },
 
   content: {
